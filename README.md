@@ -1,5 +1,47 @@
 # Multi-User Database Problems in Real Life
 
+A Persian (RTL) talk about concurrency in multi-user databases, from the last seat on a flight to processing hundreds of thousands of items in parallel.
+
+## New flat design (demo)
+
+The talk is being redesigned around real tables instead of 3D metaphors: every problem is replayed on actual rows, with transactions as colored sessions, visible row locks (hatched rows with padlock badges), uncommitted values in "wet ink", waiting sessions parked at the row, and a timeline that shows the order of events.
+
+- Design plan for every slide of the expanded deck (55 slides, which ones are built, timing, open questions): [docs/DESIGN_PLAN.md](docs/DESIGN_PLAN.md)
+- Demo (10 slides, ~50 animated steps): [demo/](demo/)
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```
+
+Open http://localhost:5180/demo/. To get one self-contained HTML file that works offline (fonts and scripts inlined):
+
+```bash
+npm run standalone
+```
+
+The file is written to `dist/standalone/demo.html`.
+
+Demo controls: Space / PageDown / ← / click = next step; PageUp / → / right-click = previous; `R` replays the current step; `Home` / `End`; `F` fullscreen; `B` blank screen. The address bar keeps your place (`#5-3` is slide 5, step 3).
+
+| # | Demo slide | Steps | Shows |
+|---|---|---|---|
+| 1 | Title | 1 | two multiplayer cursors land on the same cell of a tilted table |
+| 2 | The last seat | 4 | two phones in perspective, 15 ms apart, two boarding passes, one row |
+| 3 | Two bookings, one seat | 7 | lost update on `dbo.Seats`: reads into app memory, X lock, wet ink, overwrite, danger window |
+| 4 | Conditional UPDATE | 5 | the fix: X lock, a blocked writer, re-check, `1 row` vs `0 rows` |
+| 5 | Isolation levels | 6 | one report under five levels: no read locks, brief S locks, held S locks, gap locks, SNAPSHOT photo; matrix fills in |
+| 6 | Deadlock | 7 | opposite lock order, wait-for loop, Lock Monitor victim (1205), then fixed order |
+| 7 | Chapter: BulkOperation | 2 | live field of items changing status |
+| 8 | Claim | 4 | duplicate delivery, three instances, one conditional UPDATE wins |
+| 9 | Lease and fencing token | 5 | lock forever vs lease + heartbeat, GC pause, sweeper, stale write rejected |
+| 10 | Closing | 1 | five rules |
+
+## Original 3D version
+
 A 25-minute Persian (RTL) talk built as one continuous 3D world: the camera flies from scene to scene, and each click advances a build step. Light theme for bright rooms and projectors.
 
 - Slide copy: [src/content.ts](src/content.ts) (put the presenter name and event in `title.presenter` / `title.event`)

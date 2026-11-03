@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "standalone": "node tools/build-standalone.mjs"
   },
   "dependencies": {
     "@fontsource-variable/estedad": "^5.3.0",
