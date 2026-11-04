@@ -10,21 +10,38 @@ import { titleSlide } from './slides/p0-title';
 import { roadSlide } from './slides/p0-road';
 import { txnSlide, interleaveSlide, locksSlide, legendSlide } from './slides/p1-basics';
 import { registerStory, registerRace, registerFix } from './slides/p2-register';
-import { isolationSlide } from './slides/s05-isolation';
-import { deadlockSlide } from './slides/s06-deadlock';
-import { chapterSlide } from './slides/s07-chapter';
-import { claimSlide } from './slides/s08-claim';
-import { leaseSlide } from './slides/s09-lease';
-import { endSlide } from './slides/s10-end';
+import { gradeStory, dirtyRead, nonRepeatable, phantom } from './slides/p2-reads';
+import { proctorStory, writeSkew, skewFixes } from './slides/p2-skew';
+import { swapStory, deadlock, deadlockFix } from './slides/p2-deadlock';
+import { rushStory, hotRow, hotFix, problemQuiz } from './slides/p2-hot';
+import { isoIntro, isoLevel, snapshotInside, snapshotConflict, isoSummary } from './slides/p3-iso';
+import { pessimistic, optimistic, toolsTable } from './slides/p3-tools';
+import { caseChapter, caseNeed, caseReqs, caseModel, caseLifecycle, caseFlow, caseBulk, caseWindow, caseAtLeastOnce, caseConsumers } from './slides/p4-case';
+import { claim, lease, zombie, sweeper, counters, cancel, errors, oneClock, proof } from './slides/p4-issues';
+import { riskExternal, riskDualWrite, riskRecap, riskEscalation, riskStorm, rules, qa } from './slides/p5-end';
 
 // Timelines are seeked back and forth; values must be written immediately, never deferred.
 gsap.defaults({ lazy: false });
 
 const builders: ((stage: HTMLElement) => Slide)[] = [
+  // opening
   titleSlide, roadSlide,
+  // 1 · basics (pre-training)
   txnSlide, interleaveSlide, locksSlide, legendSlide,
+  // 2 · problems: story → table → rule
   registerStory, registerRace, registerFix,
-  isolationSlide, deadlockSlide, chapterSlide, claimSlide, leaseSlide, endSlide,
+  gradeStory, dirtyRead, nonRepeatable, phantom,
+  proctorStory, writeSkew, skewFixes,
+  swapStory, deadlock, deadlockFix,
+  rushStory, hotRow, hotFix, problemQuiz,
+  // 3 · tools
+  isoIntro, isoLevel(0), isoLevel(1), isoLevel(2), isoLevel(3), isoLevel(4), snapshotInside, snapshotConflict, isoSummary,
+  pessimistic, optimistic, toolsTable,
+  // 4 · a real system: need → design → concurrency issues
+  caseChapter, caseNeed, caseReqs, caseModel, caseLifecycle, caseFlow, caseBulk, caseWindow, caseAtLeastOnce, caseConsumers,
+  claim, lease, zombie, sweeper, counters, cancel, errors, oneClock, proof,
+  // 5 · risks and closing
+  riskExternal, riskDualWrite, riskRecap, riskEscalation, riskStorm, rules, qa,
 ];
 
 async function boot() {
