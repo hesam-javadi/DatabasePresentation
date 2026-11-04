@@ -2,12 +2,22 @@
 
 A Persian (RTL) talk about concurrency in multi-user databases, from the last seat on a flight to processing hundreds of thousands of items in parallel.
 
-## New flat design (demo)
+## The presentation (flat design)
 
-The talk is being redesigned around real tables instead of 3D metaphors: every problem is replayed on actual rows, with transactions as colored sessions, visible row locks (hatched rows with padlock badges), uncommitted values in "wet ink", waiting sessions parked at the row, and a timeline that shows the order of events.
+Course: درس پایگاه داده · Instructor: دکتر محمد سلطانیان · Presenters: حسام جوادی، علی‌محمد قلی‌زاده
 
-- Design plan for every slide of the expanded deck (55 slides, which ones are built, timing, open questions): [docs/DESIGN_PLAN.md](docs/DESIGN_PLAN.md)
-- Demo (10 slides, ~50 animated steps): [demo/](demo/)
+61 slides in five parts, built so that every click shows exactly one action:
+
+1. **Basics**: transaction, interleaving, S/X locks, the visual language.
+2. **Problems**: lost update, dirty read, non-repeatable read, phantom, write skew, deadlock, hot row. Each one goes from a flat-shaded 3D story from student life (course registration, grade entry, exam proctors, add/drop week, the 8 AM rush) to the same moment on a real table, then to a rule card.
+3. **Tools**: one slide per isolation level on the same scenario, the version store, SNAPSHOT conflicts, `UPDLOCK`, `rowversion`, and when to use which.
+4. **A real system**: why a background bulk-operation engine was needed, how it works (data model, item lifecycle, flow, bulk insert, dispatch window, at-least-once delivery), then its concurrency issues one by one (claim, lease, fencing token, sweeper, derived counters, cancel, retries, one clock, load-test proof).
+5. **Risks in similar systems** and five rules.
+
+Every slide opens with its title alone; objects are added one per click. Animations play slowly; pressing the key during one lets it finish and queues the next, so nothing is skipped.
+
+- Design and teaching approach, slide by slide: [docs/DESIGN_PLAN.md](docs/DESIGN_PLAN.md)
+- Source: [demo/](demo/)
 
 ```bash
 npm install
@@ -25,20 +35,7 @@ npm run standalone
 
 The file is written to `dist/standalone/demo.html`.
 
-Demo controls: Space / PageDown / ← / click = next step; PageUp / → / right-click = previous; `R` replays the current step; `Home` / `End`; `F` fullscreen; `B` blank screen. The address bar keeps your place (`#5-3` is slide 5, step 3).
-
-| # | Demo slide | Steps | Shows |
-|---|---|---|---|
-| 1 | Title | 1 | two multiplayer cursors land on the same cell of a tilted table |
-| 2 | The last seat | 4 | two phones in perspective, 15 ms apart, two boarding passes, one row |
-| 3 | Two bookings, one seat | 7 | lost update on `dbo.Seats`: reads into app memory, X lock, wet ink, overwrite, danger window |
-| 4 | Conditional UPDATE | 5 | the fix: X lock, a blocked writer, re-check, `1 row` vs `0 rows` |
-| 5 | Isolation levels | 6 | one report under five levels: no read locks, brief S locks, held S locks, gap locks, SNAPSHOT photo; matrix fills in |
-| 6 | Deadlock | 7 | opposite lock order, wait-for loop, Lock Monitor victim (1205), then fixed order |
-| 7 | Chapter: BulkOperation | 2 | live field of items changing status |
-| 8 | Claim | 4 | duplicate delivery, three instances, one conditional UPDATE wins |
-| 9 | Lease and fencing token | 5 | lock forever vs lease + heartbeat, GC pause, sweeper, stale write rejected |
-| 10 | Closing | 1 | five rules |
+Controls: Space / PageDown / ← / click = next step; PageUp / → / right-click = previous; `R` replays the current step; `Home` / `End`; `F` fullscreen; `B` blank screen. The address bar keeps your place (`#8-12` is slide 8, step 12).
 
 ## Original 3D version
 

@@ -128,9 +128,9 @@ export const tools = {
 };
 
 export const chapter = {
-  label: 'BulkOperation در pep-mms',
+  label: 'BulkOperation: یک سامانهٔ واقعی',
   kicker: 'یک مورد واقعی',
-  h1: 'BulkOperation در pep-mms',
+  h1: 'BulkOperation: یک سامانهٔ واقعی',
   lede: 'یک درخواست، صدها هزار آیتم، چند نمونهٔ هم‌زمان سرویس، یک پایگاه داده.',
   facts: [
     ['۵۰۰٬۰۰۰', 'آیتم در آزمون بار'],
