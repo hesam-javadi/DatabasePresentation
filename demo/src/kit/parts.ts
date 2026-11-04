@@ -273,3 +273,56 @@ export function tag(root: HTMLElement, html: string, cls: string, p: P) {
   gsap.set(el, { x: p.x, y: p.y, xPercent: -50, yPercent: -50, opacity: 0 });
   return el;
 }
+
+// ---------------------------------------------------------------- teaching devices
+
+/** The general rule behind the example, shown over a dimmed slide (concrete → abstract). */
+export function ruleCard(root: HTMLElement, o: { kicker?: string; name: string; term?: string; body: string; tone?: 'bad' | 'ok' | 'v' | 'ink' }) {
+  const el = h('div', `rule r-${o.tone ?? 'bad'}`, `<div class="rule-card">
+      <div class="rule-k">${o.kicker ?? 'قاعدهٔ کلی'}</div>
+      <h2>${o.name}${o.term ? ` <span class="term" dir="ltr">${o.term}</span>` : ''}</h2>
+      <p>${o.body}</p></div>`, root);
+  const card = el.firstElementChild as HTMLElement;
+  gsap.set(el, { opacity: 0 });
+  return {
+    el,
+    show: () => gsap.timeline().to(el, { opacity: 1, duration: 0.5 }, 0)
+      .fromTo(card, { y: 40, scale: 0.96 }, { y: 0, scale: 1, duration: 0.8, ease: 'power3.out', immediateRender: false }, 0),
+    hide: () => gsap.to(el, { opacity: 0, duration: 0.4 }),
+  };
+}
+
+/** A prediction question for the audience; `answer(i)` reveals the right option. */
+export function ask(root: HTMLElement, q: string, opts: string[], x: number, y: number, w: number) {
+  const L = ['الف', 'ب', 'ج', 'د'];
+  const el = h('div', 'ask', `<div class="ask-k">پیش‌بینی کنید</div><div class="ask-q">${q}</div>
+    <div class="ask-o">${opts.map((op, i) => `<div class="op"><b>${L[i]}</b><span>${op}</span></div>`).join('')}</div>`, root);
+  el.style.cssText = `left:${x}px;top:${y}px;width:${w}px`;
+  const ops = Array.from(el.querySelectorAll<HTMLElement>('.op'));
+  gsap.set(el, { opacity: 0 });
+  return {
+    el,
+    show: () => gsap.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', immediateRender: false }),
+    answer: (i: number) => {
+      const t = gsap.timeline();
+      ops.forEach((op, k) => t.to(op, k === i ? { backgroundColor: '#dff4ec', borderColor: '#0e9467', scale: 1.04, duration: 0.5 } : { opacity: 0.35, duration: 0.5 }, 0));
+      return t;
+    },
+    hide: () => gsap.to(el, { opacity: 0, duration: 0.4 }),
+  };
+}
+
+/** A box for diagrams (architecture, state machines, lists). */
+export function node(root: HTMLElement, html: string, x: number, y: number, w: number, cls = '') {
+  const el = h('div', `node ${cls}`, html, root);
+  el.style.cssText = `left:${x}px;top:${y}px;width:${w}px`;
+  return el;
+}
+
+/** Anchor points on an element's box. */
+export function anchor(el: HTMLElement, root: HTMLElement) {
+  const b = pos(el, root);
+  return {
+    l: { x: b.x, y: b.cy }, r: { x: b.r, y: b.cy }, t: { x: b.cx, y: b.y }, b: { x: b.cx, y: b.b }, c: { x: b.cx, y: b.cy }, box: b,
+  };
+}

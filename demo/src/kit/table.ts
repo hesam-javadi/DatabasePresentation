@@ -221,7 +221,7 @@ export class DbTable {
   // ------------------------------------------------------------- locks
 
   /** Take a row lock: a hatched zone in the owner's color plus a padlock badge on one side. */
-  lock(id: string, tone: Tone, who: string, mode: 'X' | 'S' | 'U' = 'X', side: 'left' | 'right' = 'right', out = 16) {
+  lock(id: string, tone: Tone, who: string, mode: 'X' | 'S' | 'U' = 'X', side: 'left' | 'right' = 'right', out = 16, key: string = tone) {
     const r = this.row(id);
     const zone = h('div', `lk-zone t-${tone} m-${mode}`, '', r.el);
     const badge = h('div', `lk-badge t-${tone} m-${mode}`, `${ICON.lock}<b>${mode}</b><small>${who}</small>`, r.el);
@@ -229,7 +229,7 @@ export class DbTable {
     const shackle = badge.querySelector('.shackle')!;
     gsap.set([zone, badge], { opacity: 0 });
     gsap.set(shackle, { y: -5 });
-    r.locks.set(tone, { zone, badge, mode });
+    r.locks.set(key, { zone, badge, mode });
     return gsap.timeline()
       .fromTo(zone, { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out', immediateRender: false }, 0)
       .fromTo(badge, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(2)', immediateRender: false }, 0.05)
@@ -237,11 +237,11 @@ export class DbTable {
       .to(badge, { scale: 1.12, duration: 0.1, yoyo: true, repeat: 1 }, 0.62);
   }
 
-  unlock(id: string, tone: Tone) {
+  unlock(id: string, key: string) {
     const r = this.row(id);
-    const l = r.locks.get(tone);
-    if (!l) throw new Error(`no lock ${tone} on ${id}`);
-    r.locks.delete(tone);
+    const l = r.locks.get(key);
+    if (!l) throw new Error(`no lock ${key} on ${id}`);
+    r.locks.delete(key);
     const shackle = l.badge.querySelector('.shackle')!;
     return gsap.timeline()
       .to(shackle, { y: -6, rotation: -28, svgOrigin: '16 11', duration: 0.3, ease: 'power2.out' }, 0)
@@ -252,20 +252,20 @@ export class DbTable {
   hasLock(id: string, tone: Tone) { return this.row(id).locks.has(tone); }
 
   /** A blocked request parked at the row's edge, pulsing. */
-  wait(id: string, tone: Tone, who: string, side: 'left' | 'right', out = 16, label = 'منتظر') {
+  wait(id: string, tone: Tone, who: string, side: 'left' | 'right', out = 16, label = 'منتظر', key: string = tone) {
     const r = this.row(id);
     const w = h('div', `waiter t-${tone}`, `<i class="ring"></i><span class="wb">${who}</span><em>${label}</em>`, r.el);
     w.style[side === 'right' ? 'left' : 'right'] = `calc(100% + ${out}px)`;
     gsap.set(w, { opacity: 0 });
-    r.waiters.set(tone, w);
+    r.waiters.set(key, w);
     return gsap.fromTo(w, { opacity: 0, x: side === 'right' ? 40 : -40 }, { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out', immediateRender: false });
   }
 
-  unwait(id: string, tone: Tone) {
+  unwait(id: string, key: string) {
     const r = this.row(id);
-    const w = r.waiters.get(tone);
-    if (!w) throw new Error(`no waiter ${tone} on ${id}`);
-    r.waiters.delete(tone);
+    const w = r.waiters.get(key);
+    if (!w) throw new Error(`no waiter ${key} on ${id}`);
+    r.waiters.delete(key);
     return gsap.to(w, { opacity: 0, scale: 0.6, duration: 0.3 });
   }
 

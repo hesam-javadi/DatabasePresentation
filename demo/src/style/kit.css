@@ -239,3 +239,41 @@
 .fa-in { font-family: var(--font); direction: rtl; unicode-bidi: isolate; font-weight: 750; }
 .note.one { padding: 14px 26px; font-size: 27px; text-align: center; }
 .bracket span { top: 50%; transform: translate(-50%, -50%); }
+
+/* ================= teaching devices ================= */
+.rule {
+  position: absolute; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center;
+  background: rgba(243, 245, 249, .86); backdrop-filter: blur(4px);
+}
+.rule-card {
+  width: 1180px; padding: 54px 70px 58px; background: #fff; border-radius: 30px; box-shadow: var(--shadow-hi);
+  border: 3px solid var(--c, var(--ink)); text-align: right;
+}
+.r-bad { --c: var(--bad); } .r-ok { --c: var(--ok); } .r-v { --c: var(--v); } .r-ink { --c: var(--ink); }
+.rule-k { font-size: 24px; font-weight: 800; color: var(--c); letter-spacing: .02em; }
+.rule-card h2 { font-size: 60px; font-weight: 900; margin: 10px 0 18px; display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.rule-card h2 .term { font-size: 26px; }
+.rule-card p { font-size: 36px; line-height: 1.7; color: var(--ink2); font-weight: 500; }
+.rule-card p b { color: var(--ink); font-weight: 800; }
+.rule-card p code { font-size: .8em; background: #e6ebf3; border-radius: 8px; padding: 0 10px; color: var(--ink); }
+
+.ask {
+  position: absolute; z-index: 9; background: #fff; border: 3px solid var(--v); border-radius: 24px; padding: 24px 30px;
+  box-shadow: var(--shadow-hi);
+}
+.ask-k { font-size: 20px; font-weight: 800; color: var(--v); }
+.ask-q { font-size: 32px; font-weight: 800; margin: 6px 0 16px; line-height: 1.45; }
+.ask-o { display: grid; gap: 10px; }
+.ask .op { display: flex; gap: 14px; align-items: center; padding: 10px 16px; border-radius: 14px; border: 2.5px solid var(--line); font-size: 27px; font-weight: 600; background: #fff; }
+.ask .op b { width: 40px; height: 40px; border-radius: 50%; background: var(--v-soft); color: var(--v); display: grid; place-items: center; font-size: 20px; flex: none; }
+.ask .op code { font-size: .85em; }
+
+.node {
+  position: absolute; z-index: 2; background: #fff; border: 2.5px solid var(--line); border-radius: 18px; padding: 16px 20px;
+  box-shadow: var(--shadow); font-size: 26px; font-weight: 700; text-align: center; line-height: 1.4;
+}
+.node small { display: block; font-size: 19px; color: var(--ink2); font-weight: 550; margin-top: 4px; }
+.node .ic { width: 40px; height: 40px; display: block; margin: 0 auto 6px; color: var(--c, var(--ink2)); }
+.node.tone { border-color: var(--c); background: var(--soft); }
+.node.mono { font-family: var(--mono); }
+.node.pillish { border-radius: 999px; padding: 12px 24px; }

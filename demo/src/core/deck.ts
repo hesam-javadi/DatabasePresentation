@@ -40,6 +40,9 @@ export function newSlide(stage: HTMLElement, cls = '') {
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/** Playback rate of every step animation (< 1 = slower than authored). */
+export const PACE = 0.78;
+
 export class Deck {
   slides: Slide[] = [];
   i = -1;
@@ -107,13 +110,22 @@ export class Deck {
     } else if (k === 'b' || k === 'B' || k === '.') document.body.classList.toggle('blank');
   }
 
+  private queued = false;
+
   next() {
+    // a step is still playing: let it finish (faster) and then play the next one, so nothing is skipped
+    if (this.run && this.run.isActive()) {
+      this.run.timeScale(2.5);
+      this.queued = true;
+      return;
+    }
     const sl = this.slides[this.i];
     if (this.s < sl.steps) this.goto(this.i, this.s + 1);
     else if (this.i < this.slides.length - 1) this.goto(this.i + 1, 1);
   }
 
   prev() {
+    this.queued = false;
     if (this.s > 1) this.goto(this.i, this.s - 1);
     else if (this.i > 0) this.goto(this.i - 1, this.slides[this.i - 1].steps);
   }
@@ -155,14 +167,18 @@ export class Deck {
     sl.tl.time(from, false);
     if (reduced) { sl.tl.time(to, false); sl.onStep?.(s); return; }
     this.run = gsap.to(sl.tl, {
-      time: to, duration: Math.max(0.01, to - from), ease: 'none', delay,
-      onComplete: () => sl.onStep?.(s),
+      time: to, duration: Math.max(0.01, (to - from) / PACE), ease: 'none', delay,
+      onComplete: () => {
+        sl.onStep?.(s);
+        if (this.queued) { this.queued = false; this.next(); }
+      },
     });
     sl.onStep?.(s);
   }
 
   private seek(sl: Slide, s: number) {
     this.run?.kill();
+    this.queued = false;
     sl.tl.pause();
     sl.tl.time(s <= 0 ? 0 : sl.tl.labels[`s${s}`], false);
     if (s > 0) sl.onStep?.(s);

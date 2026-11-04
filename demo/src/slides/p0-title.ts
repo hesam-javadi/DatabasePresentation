@@ -10,10 +10,10 @@ export function titleSlide(stage: HTMLElement): Slide {
   const { el, master, step } = newSlide(stage, 's-title');
 
   const text = h('div', 'title-text', `
-    <div class="kicker">یک گفت‌وگوی فنی دربارهٔ هم‌زمانی</div>
+    <div class="kicker">درس پایگاه داده</div>
     <h1>مشکلات پایگاه دادهٔ <span class="duo">چندکاربره</span> در دنیای واقعی</h1>
-    <p>وقتی دو نفر در یک لحظه به یک ردیف دست می‌زنند: از آخرین صندلی پرواز تا پردازش صدها هزار آیتم هم‌زمان.</p>
-    <div class="meta"><span>SQL Server</span><i></i><span>RabbitMQ</span><i></i><span>pep-mms</span></div>
+    <p>وقتی دو نفر در یک لحظه به یک ردیف دست می‌زنند: از آخرین صندلی کلاس تا پردازش صدها هزار آیتم هم‌زمان.</p>
+    <div class="people"><div><small>ارائه</small><b>حسام جوادی</b><b>علی‌محمد قلی‌زاده</b></div><div><small>استاد</small><b>دکتر محمد سلطانیان</b></div></div>
   `, el);
 
   const wrap = h('div', 'title-3d', '', el);

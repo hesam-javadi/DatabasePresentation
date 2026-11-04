@@ -6,10 +6,10 @@ import './style/kit.css';
 import './style/slides.css';
 import { Deck, Slide, fitStage } from './core/deck';
 import { h } from './core/dom';
-import { titleSlide } from './slides/s01-title';
-import { storySlide } from './slides/s02-story';
-import { raceSlide } from './slides/s03-race';
-import { fixSlide } from './slides/s04-fix';
+import { titleSlide } from './slides/p0-title';
+import { roadSlide } from './slides/p0-road';
+import { txnSlide, interleaveSlide, locksSlide, legendSlide } from './slides/p1-basics';
+import { registerStory, registerRace, registerFix } from './slides/p2-register';
 import { isolationSlide } from './slides/s05-isolation';
 import { deadlockSlide } from './slides/s06-deadlock';
 import { chapterSlide } from './slides/s07-chapter';
@@ -21,8 +21,10 @@ import { endSlide } from './slides/s10-end';
 gsap.defaults({ lazy: false });
 
 const builders: ((stage: HTMLElement) => Slide)[] = [
-  titleSlide, storySlide, raceSlide, fixSlide, isolationSlide,
-  deadlockSlide, chapterSlide, claimSlide, leaseSlide, endSlide,
+  titleSlide, roadSlide,
+  txnSlide, interleaveSlide, locksSlide, legendSlide,
+  registerStory, registerRace, registerFix,
+  isolationSlide, deadlockSlide, chapterSlide, claimSlide, leaseSlide, endSlide,
 ];
 
 async function boot() {

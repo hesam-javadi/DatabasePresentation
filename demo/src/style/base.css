@@ -76,7 +76,7 @@ code, .code { font-family: var(--mono); direction: ltr; unicode-bidi: isolate; }
   position: absolute; bottom: 28px; right: 96px; left: 96px; z-index: 20;
   display: flex; align-items: center; gap: 28px;
 }
-.prog { flex: 1; display: flex; gap: 8px; direction: rtl; }
+.prog { flex: 1; display: flex; gap: 4px; direction: rtl; }
 .prog i { flex: 1; height: 6px; border-radius: 3px; background: #dbe1ea; overflow: hidden; display: block; }
 .prog i b { display: block; height: 100%; background: var(--ink); transform-origin: right; transform: scaleX(0); transition: transform .5s; }
 .stepno { font-size: 20px; color: var(--ink3); min-width: 150px; text-align: left; font-weight: 600; }
