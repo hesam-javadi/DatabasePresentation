@@ -2,7 +2,7 @@
 
 Course: درس پایگاه داده · Instructor: دکتر محمد سلطانیان · Presenters: حسام جوادی، علی‌محمد قلی‌زاده · Audience: university students.
 
-The full deck is built in `demo/` (61 slides, about 640 clicks). Run `npm run dev` and open `http://localhost:5180/demo/`, or open the single offline file from `npm run standalone`.
+The full deck is built in `demo/` (61 slides, about 575 clicks). Run `npm run dev` and open `http://localhost:5180/demo/`, or open the single offline file from `npm run standalone`.
 
 ---
 
@@ -64,7 +64,7 @@ Green and red are only verdicts (correct / anomaly). T2 is magenta so it never r
 | 4 · A real system | 36–54 | ~170 |
 | 5 · Risks and closing | 55–61 | ~45 |
 
-At roughly 4 seconds per click this is about 45 minutes plus Q&A.
+At roughly 4–5 seconds per click this is about 40–45 minutes plus Q&A.
 
 ### Opening
 1. **Title** — a tilted `dbo.Accounts` table; two cursors (سارا, رضا) land on the same cell, which flickers between two values. Course, instructor and presenters.

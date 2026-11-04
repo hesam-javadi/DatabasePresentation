@@ -93,7 +93,7 @@ export function dirtyRead(stage: HTMLElement) {
   const a1 = arrow(b.f, prof.side('left', 40), R, 't1', { bend: 0.1 });
   const a2 = arrow(b.f, nima.side('right', 40), { x: R.x + 6, y: R.y + 6 }, 't2', { bend: -0.08 });
   const q = ask(b.el, 'نیما الان چه می‌بیند؟', ['NULL', '۱۸', 'منتظر می‌ماند'], 610, 712, 700);
-  const fix = note(b.el, 'در <b>READ COMMITTED</b> (پیش‌فرض) خواندن پشت قفل منتظر می‌ماند؛ و در نسخهٔ snapshotیِ آن (RCSI) مقدارِ commitشده، یعنی NULL، را می‌بیند.', 'ok', 560, 728, 800);
+  const fix = note(b.el, 'در <b>READ COMMITTED</b> (پیش‌فرض) خواندن پشت قفل منتظر می‌ماند؛ و در نسخهٔ snapshotیِ آن (RCSI) مقدارِ commitشده، یعنی NULL، را می‌بیند.', 'ok', 560, 636, 800);
   const rule = ruleCard(b.el, { name: 'خواندن کثیف', term: 'Dirty Read', body: 'خواندنِ داده‌ای که <b>هنوز commit نشده</b>. اگر نویسنده rollback کند، خواننده با عددی تصمیم گرفته که <b>هرگز وجود نداشت</b>. <code>NOLOCK</code> و <code>READ UNCOMMITTED</code> دقیقاً همین را مجاز می‌کنند.' });
   const row = '401234';
 

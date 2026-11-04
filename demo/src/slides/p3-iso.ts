@@ -99,8 +99,8 @@ export function isoIntro(stage: HTMLElement) {
   const b = build(stage, { id: 'iso-intro', chapter: CH.tools, label: 'سطح جداسازی', title: 'سطح جداسازی یعنی چه؟', term: 'Isolation Level' });
   const dial = h('div', 'dial', LEVELS.map((l, i) => `<div class="dl ${i === 4 ? 'snap' : ''}"><b dir="ltr">${l.name}</b><span>${l.cost}</span></div>`).join(''), b.el);
   const dls = Array.from(dial.children) as HTMLElement[];
-  const q1 = node(b.el, `${ICON.lock}<b>خواننده قفل می‌گیرد؟</b><small>و تا کی نگهش می‌دارد؟</small>`, 1260, 300, 300, 'tone t-t2');
-  const q2 = node(b.el, `${ICON.camera}<b>یا از یک نسخهٔ قدیمی می‌خواند؟</b><small>بدون قفل</small>`, 1260, 560, 300, 'tone t-v');
+  const q1 = node(b.el, `${ICON.lock}<b>خواننده قفل می‌گیرد؟</b><small>و تا کی نگهش می‌دارد؟</small>`, 760, 300, 420, 'tone t-t2');
+  const q2 = node(b.el, `${ICON.camera}<b>یا از یک نسخهٔ قدیمی می‌خواند؟</b><small>بدون قفل</small>`, 760, 560, 420, 'tone t-v');
   const scale = h('div', 'iso-scale', '<span>هم‌زمانیِ بیشتر</span><i></i><span>درستیِ بیشتر</span>', b.el);
   const rule = ruleCard(b.el, { name: 'سطح جداسازی', term: 'Isolation', tone: 'v', kicker: 'تعریف', body: 'حرف <b>I</b> در ACID. سطح جداسازی تعیین می‌کند یک تراکنش چقدر از کار تراکنش‌های دیگر <b>جدا بماند</b>: خواننده قفل بگیرد یا نه، تا کی نگهش دارد، و آیا از یک <b>نسخهٔ قدیمی</b> بخواند. سخت‌گیری بیشتر، درستی بیشتر و انتظار بیشتر.' });
   b.s('دیدیم که خواندن و نوشتنِ هم‌زمان چه مشکلاتی می‌سازد. SQL Server یک «پیچ تنظیم» برای این کار دارد.');

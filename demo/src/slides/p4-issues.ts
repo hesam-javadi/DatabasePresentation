@@ -221,13 +221,13 @@ export function errors(stage: HTMLElement) {
     gsap.set(e, { x: 760, y: 280 + i * 54, opacity: 0 });
     return { e, kind };
   });
-  const back = node(b.el, `<label>تأخیر بین تلاش‌ها، کمی تصادفی</label><div class="backoff"><i style="width:60px">1s</i><i style="width:120px">2s</i><i style="width:240px">4s</i><i style="width:480px">8s</i></div>`, 1180, 820, 560, 'codebox');
+  const back = node(b.el, `<label>تأخیر بین تلاش‌ها، کمی تصادفی</label><div class="backoff"><i style="width:60px">1s</i><i style="width:120px">2s</i><i style="width:240px">4s</i><i style="width:480px">8s</i></div>`, 1180, 300, 560, 'codebox');
   const rule = ruleCard(b.el, { name: 'گذرا یا قطعی؟', tone: 'ok', kicker: 'حل مسئلهٔ ۷', body: 'بن‌بست (<code>1205</code>)، تایم‌اوت قفل (<code>1222</code>) و قطعی شبکه <b>گذرا</b>اند: با تأخیرِ افزایشی و کمی تصادف دوباره امتحان می‌شوند. خطای قانونِ کسب‌وکار <b>قطعی</b> است: آیتم بلافاصله Failed می‌شود.' });
   b.s('مسئلهٔ ۷: کارِ یک آیتم با خطا تمام شد. دوباره امتحانش کنیم؟')
     .show('دو مسیر داریم.', [fail, retry])
     .s('این خطاها از راه می‌رسند.', (t) => chips.forEach(({ e }, i) => t.fromTo(e, { opacity: 0, x: 820 }, { opacity: 1, x: 760, duration: 0.4, immediateRender: false }, i * 0.12)))
-    .s('بن‌بست، تایم‌اوت قفل و قطعی شبکه، <b>گذرا</b>اند.', (t) => chips.filter((c) => c.kind === 'r').forEach(({ e }, i) => t.to(e, { x: 1300 + (i % 2) * 40, y: 650 + i * 40, duration: 0.9, ease: 'power2.inOut' }, i * 0.15)))
-    .s('خطای قانونِ کسب‌وکار، <b>قطعی</b> است. تکرارش فایده‌ای ندارد.', (t) => chips.filter((c) => c.kind === 'f').forEach(({ e }, i) => t.to(e, { x: 300 + i * 40, y: 650 + i * 40, duration: 0.9, ease: 'power2.inOut' }, i * 0.15)))
+    .s('بن‌بست، تایم‌اوت قفل و قطعی شبکه، <b>گذرا</b>اند.', (t) => chips.filter((c) => c.kind === 'r').forEach(({ e }, i) => t.to(e, { x: 1250 + (i % 2) * 60, y: 710 + i * 46, duration: 0.9, ease: 'power2.inOut' }, i * 0.15)))
+    .s('خطای قانونِ کسب‌وکار، <b>قطعی</b> است. تکرارش فایده‌ای ندارد.', (t) => chips.filter((c) => c.kind === 'f').forEach(({ e }, i) => t.to(e, { x: 260 + i * 60, y: 710 + i * 46, duration: 0.9, ease: 'power2.inOut' }, i * 0.15)))
     .show('و تلاش دوباره با تأخیرِ افزایشی، تا همه با هم برنگردند.', back)
     .s(null, (t) => t.add(rule.show()));
   return b.done();

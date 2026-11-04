@@ -126,7 +126,7 @@ export function legendSlide(stage: HTMLElement) {
     ['<span class="lg-mem">enrolled = 29</span>', 'حافظهٔ برنامه', 'مقداری که برنامه باور دارد؛ شاید کهنه'],
     ['<span class="lg-ev">UPDATE</span>', 'خط زمانی', 'ترتیب رویدادها، از راست به چپ'],
   ];
-  const grid = h('div', 'legend', '', b.el);
+  const grid = h('div', 'legend-grid', '', b.el);
   const els = items.map(([v, n, d]) => h('div', 'lg', `<div class="lg-v">${v}</div><div><b>${n}</b><span>${d}</span></div>`, grid));
   b.s('قبل از مشکلات، نمادهایی را که دیدیم یک‌جا مرور کنیم.');
   els.forEach((e) => b.show(null, e, undefined, { y: 16 }));

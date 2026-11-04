@@ -49,7 +49,7 @@ export function registerStory(stage: HTMLElement) {
   hidden(ground, room, sIs, rIs);
 
   const pBoard = s3.label('پایگاه داده · گروه ۲<small>ثبت‌شده: ۲۹ از ۳۰</small>', brd, [0, 1.55, 0.2], 'ui big');
-  const pBoard2 = s3.label('<span class="kbad">۳۱ دانشجو</span> · ۳۰ صندلی', brd, [0, 1.55, 0.2], 'ui big');
+  const pBoard2 = s3.label('<span class="kbad">۳۱ دانشجو</span>، ۳۰ صندلی', brd, [0, 1.55, 0.2], 'ui big');
   const pSeat = s3.label('آخرین صندلی', emptySeat!, [0, 1.25, 0], 'ok');
   const pSara = s3.label('سارا · خوابگاه', sara.g, [0, -0.2, 0.9], 't1');
   const pReza = s3.label('رضا · خانه', reza.g, [0, -0.2, 0.9], 't2');

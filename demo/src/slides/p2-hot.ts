@@ -100,10 +100,10 @@ export function hotRow(stage: HTMLElement) {
 
 export function hotFix(stage: HTMLElement) {
   const b = build(stage, { id: 'hot-fix', chapter: CH.problems, label: 'رفع ردیف داغ', title: 'شمارنده را پخش کنید، یا اصلاً نگه ندارید' });
-  const tb = new DbTable(b.el, { name: 'dbo.StatShards', x: 260, y: 290, rowH: 74, cols: [{ key: 'name', label: 'Name', w: 300, kind: 'mono', pk: true }, { key: 'sh', label: 'Shard', w: 120, kind: 'num', pk: true }, { key: 'v', label: 'Value', w: 170, kind: 'num' }], rows: [0, 1, 2, 3].map((s) => ({ id: `s${s}`, name: 'TotalEnrollments', sh: String(s), v: String(3106 + s) })) });
+  const tb = new DbTable(b.el, { name: 'dbo.StatShards', x: 260, y: 290, rowH: 74, cols: [{ key: 'name', label: 'Name', w: 380, kind: 'mono', pk: true }, { key: 'sh', label: 'Shard', w: 120, kind: 'num', pk: true }, { key: 'v', label: 'Value', w: 170, kind: 'num' }], rows: [0, 1, 2, 3].map((s) => ({ id: `s${s}`, name: 'TotalEnrollments', sh: String(s), v: String(3106 + s) })) });
   const who: ['t1' | 't2' | 't3' | 'mute', string][] = [['t1', 'U1'], ['t2', 'U2'], ['t3', 'U3'], ['mute', 'U4']];
   const pick = node(b.el, `<label>هر نوشتن، یک ردیف تصادفی</label><pre dir="ltr">${k('UPDATE')} StatShards ${k('SET')} Value = Value + 1\n${k('WHERE')} Name = ${str('TotalEnrollments')}\n  ${k('AND')} Shard = ${hl('@random % 4')}</pre>`, 260, 690, 590, 'codebox');
-  const sum = tag(b.el, `<span dir="ltr">SUM(Value) = 12,434</span>`, 'ink mono', { x: 555, y: 252 });
+  const sum = tag(b.el, `<span dir="ltr">SUM(Value) = 12,434</span>`, 'ink mono', { x: 595, y: 252 });
   const derive = node(b.el, `<div class="fx-t">راه دوم: از روی خود داده بشمارید</div><div class="fx-d">اصلاً شمارنده نگه ندارید. تعداد ثبت‌نام‌ها همان تعداد ردیف‌های Enrollments است؛ هر وقت لازم شد بشمارید (با ایندکس مناسب، یا هر چند ثانیه یک بار).</div><pre dir="ltr">${k('SELECT COUNT')}(*) ${k('FROM')} Enrollments\n${k('WHERE')} SectionId = 2</pre>`, 1180, 330, 640, 'fixpanel');
   b.hide(sum);
   const rule = ruleCard(b.el, { name: 'یک ردیفِ پرنوشتن نسازید', tone: 'ok', kicker: 'راه‌حل', body: 'یا شمارنده را بین چند ردیف <b>پخش کنید</b> و موقع خواندن جمع بزنید، یا شمارنده را <b>از روی خود داده</b> حساب کنید. همین ایده را در سامانهٔ واقعی دوباره می‌بینیم.' });

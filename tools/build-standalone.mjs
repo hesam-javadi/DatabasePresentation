@@ -1,6 +1,6 @@
 // Build the flat demo as ONE self-contained HTML file (fonts, CSS and JS inlined).
 //   node tools/build-standalone.mjs                 → dist/standalone/demo.html (works offline)
-//   node tools/build-standalone.mjs --cdn --out=DIR → body-only page that loads GSAP from cdnjs
+//   node tools/build-standalone.mjs --cdn --out=DIR → body-only page that loads GSAP (cdnjs) and three (jsDelivr)
 import { build } from 'vite';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -16,7 +16,7 @@ await build({
   resolve: cdn ? { alias: [{ find: /^gsap$/, replacement: path.join(root, 'tools/gsap-global.js') }] } : {},
   build: {
     outDir: tmp, emptyOutDir: true, assetsInlineLimit: 100_000_000, cssCodeSplit: false, modulePreload: false,
-    rollupOptions: { input: path.join(root, 'demo/index.html') },
+    rollupOptions: { input: path.join(root, 'demo/index.html'), external: cdn ? ['three'] : [] },
   },
 });
 
@@ -27,7 +27,7 @@ html = html.replace(/<link rel="stylesheet"[^>]*href="([^"]+)"[^>]*>\s*/g, (_, h
 html = html.replace(/<script type="module"[^>]*src="([^"]+)"[^>]*><\/script>\s*/g, (_, src) => { js += fs.readFileSync(path.resolve(dir, src), 'utf8'); return ''; });
 js = js.replace(/<\/script/gi, '<\\/script');
 const title = html.match(/<title>[\s\S]*?<\/title>/)?.[0] ?? '';
-const gsapTag = cdn ? '<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>\n' : '';
+const gsapTag = cdn ? '<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>\n<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>\n' : '';
 
 let page;
 if (cdn) {

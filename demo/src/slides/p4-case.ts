@@ -111,8 +111,8 @@ export function caseModel(stage: HTMLElement) {
       { id: '44', op: '17', st: 'Pending', att: '0', tok: 'NULL', until: 'NULL' },
     ],
   });
-  const rel = arrow(b.f, { x: op.x + 45, y: op.bottom + 4 }, { x: it.x + it.width - 0, y: it.rowMid('41') - 30 }, 'ink', { bend: 0.25 });
-  const relTag = tag(b.el, 'یک عملیات، تعداد زیادی آیتم', 'ink', { x: 380, y: 470 });
+  const rel = arrow(b.f, { x: op.x + 45, y: op.bottom + 6 }, { x: it.x + 70, y: it.y - 6 }, 'ink', { bend: 0.15 });
+  const relTag = tag(b.el, 'یک عملیات، تعداد زیادی آیتم', 'ink', { x: 360, y: 490 });
   b.hide(relTag);
   b.s('همهٔ وضعیت در دو جدول نگه داشته می‌شود؛ نه در حافظهٔ سرورها.')
     .show('جدول عملیات: برای هر درخواستِ کاربر یک ردیف.', op.el)
@@ -270,10 +270,10 @@ export function caseAtLeastOnce(stage: HTMLElement) {
   b.s('RabbitMQ پیام را تحویل می‌دهد و منتظر «تأیید» (ack) می‌ماند.')
     .show('صف.', mq)
     .show('و دو کارگر.', [w1, w2])
-    .s('پیام آیتم ۴۲ به کارگر اول می‌رسد.', (t) => t.to(env, { opacity: 1, duration: 0.2 }).to(env, { x: P(w1).c.x, y: P(w1).c.y, duration: 1.2, ease: 'power2.inOut' }, 0.2))
+    .s('پیام آیتم ۴۲ به کارگر اول می‌رسد.', (t) => t.to(env, { opacity: 1, duration: 0.2 }).to(env, { x: P(w1).c.x, y: P(w1).b.y + 34, duration: 1.2, ease: 'power2.inOut' }, 0.2))
     .s('اگر کار تمام شود، کارگر ack می‌فرستد و صف پیام را پاک می‌کند.', (t) => t.fromTo(ack, { opacity: 0, x: 1100 }, { opacity: 1, x: 1300, duration: 0.8, immediateRender: false }).to(ack, { opacity: 0, duration: 0.3 }, 1.4))
     .s('ولی این بار کارگر <b>قبل از ack</b> می‌افتد؛ شاید بعد از انجامِ کار.', (t) => t.fromTo(crash, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.4, immediateRender: false }).to(w1, { opacity: 0.4, filter: 'grayscale(1)', duration: 0.5 }, 0.2))
-    .s('صف ackی نگرفته؛ پس همان پیام را دوباره به کارگر دیگری می‌دهد.', (t) => t.to(env2, { opacity: 1, duration: 0.2 }).to(env2, { x: P(w2).c.x, y: P(w2).c.y, duration: 1.2, ease: 'power2.inOut' }, 0.2))
+    .s('صف ackی نگرفته؛ پس همان پیام را دوباره به کارگر دیگری می‌دهد.', (t) => t.to(env2, { opacity: 1, duration: 0.2 }).to(env2, { x: P(w2).c.x, y: P(w2).b.y + 34, duration: 1.2, ease: 'power2.inOut' }, 0.2))
     .show(null, dup.el)
     .s(null, (t) => t.add(rule.show()));
   return b.done();
