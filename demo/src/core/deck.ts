@@ -58,6 +58,41 @@ export class Deck {
     const bottom = h('footer', 'chrome-bottom', '', stage);
     this.prog = h('div', 'prog', '', bottom);
     this.stepno = h('span', 'stepno', '', bottom);
+    this.menuBtn = h('button', 'nav-ui nav-btn', '☰ فهرست اسلایدها', stage);
+    this.nav = h('div', 'nav-ui nav', '', stage);
+  }
+
+  private menuBtn: HTMLElement;
+  private nav: HTMLElement;
+  private typed = '';
+  private typedAt = 0;
+
+  /** Slide menu: every slide by part, click to jump. */
+  private buildNav() {
+    let html = '<div class="nav-head"><b>فهرست اسلایدها</b><span>کلید M یا Esc برای بستن · عدد + Enter برای پرش · [ و ] اسلاید قبل و بعد</span></div><div class="nav-grid">';
+    let ch: string | null = null;
+    this.slides.forEach((s, i) => {
+      const c = s.chapter || 'آغاز';
+      if (c !== ch) { if (ch !== null) html += '</div>'; html += `<div class="nav-ch"><h3>${c}</h3>`; ch = c; }
+      html += `<a data-i="${i}"><b>${fa(i + 1)}</b><span>${s.label}</span></a>`;
+    });
+    html += '</div></div>';
+    this.nav.innerHTML = html;
+    this.nav.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest('a');
+      if (a) { this.toggleNav(false); this.goto(+a.dataset.i!, 1, true); }
+    });
+    this.menuBtn.addEventListener('click', () => this.toggleNav());
+  }
+
+  toggleNav(on = !this.nav.classList.contains('on')) {
+    this.nav.classList.toggle('on', on);
+    if (on) this.nav.querySelectorAll('a').forEach((a, k) => a.classList.toggle('cur', k === this.i));
+  }
+
+  gotoSlide(i: number) {
+    i = Math.max(0, Math.min(this.slides.length - 1, i));
+    if (i !== this.i) this.goto(i, 1, true);
   }
 
   add(s: Slide) {
@@ -70,8 +105,14 @@ export class Deck {
     this.prog.innerHTML = this.slides.map(() => '<i><b></b></i>').join('');
     addEventListener('keydown', (e) => this.key(e));
     addEventListener('hashchange', () => this.fromHash());
-    addEventListener('click', (e) => { if (e.button === 0) this.next(); });
-    addEventListener('contextmenu', (e) => { e.preventDefault(); this.prev(); });
+    this.buildNav();
+    this.prog.addEventListener('click', (e) => {
+      const seg = (e.target as HTMLElement).closest('i');
+      if (seg) this.gotoSlide(Array.from(this.prog.children).indexOf(seg));
+    });
+    const ui = (e: Event) => !!(e.target as HTMLElement).closest('.nav-ui, .prog');
+    addEventListener('click', (e) => { if (e.button === 0 && !ui(e) && !this.nav.classList.contains('on')) this.next(); });
+    addEventListener('contextmenu', (e) => { e.preventDefault(); if (!this.nav.classList.contains('on')) this.prev(); });
     let last = 0;
     addEventListener('wheel', (e) => {
       const now = performance.now();
@@ -99,6 +140,20 @@ export class Deck {
 
   private key(e: KeyboardEvent) {
     const k = e.key;
+    const navOn = this.nav.classList.contains('on');
+    if (k === 'm' || k === 'M' || k === 'o' || k === 'O' || k === 'Tab' || (k === 'Escape' && navOn)) { e.preventDefault(); this.toggleNav(); return; }
+    if (navOn) return;
+    if (/^[0-9۰-۹]$/.test(k)) {
+      const d = String('۰۱۲۳۴۵۶۷۸۹'.indexOf(k) >= 0 ? '۰۱۲۳۴۵۶۷۸۹'.indexOf(k) : k);
+      const now = performance.now();
+      this.typed = (now - this.typedAt < 2000 ? this.typed : '') + d;
+      this.typedAt = now;
+      this.stepno.textContent = `پرش به اسلاید ${fa(this.typed)} …`;
+      return;
+    }
+    if (k === 'Enter' && this.typed && performance.now() - this.typedAt < 4000) { e.preventDefault(); const n = +this.typed; this.typed = ''; this.gotoSlide(n - 1); return; }
+    if (k === ']' || k === 'n' || k === 'N') { this.gotoSlide(this.i + 1); return; }
+    if (k === '[' || k === 'p' || k === 'P') { this.gotoSlide(this.i - 1); return; }
     if ([' ', 'PageDown', 'ArrowLeft', 'ArrowDown', 'Enter'].includes(k)) { e.preventDefault(); this.next(); }
     // RTL: ← goes forward, → goes back
     else if (['PageUp', 'ArrowRight', 'ArrowUp', 'Backspace'].includes(k)) { e.preventDefault(); this.prev(); }

@@ -35,7 +35,7 @@ npm run standalone
 
 The file is written to `dist/standalone/demo.html`.
 
-Controls: Space / PageDown / ← / click = next step; PageUp / → / right-click = previous; `R` replays the current step; `Home` / `End`; `F` fullscreen; `B` blank screen. The address bar keeps your place (`#8-12` is slide 8, step 12).
+Controls: Space / PageDown / ← / click = next step; PageUp / → / right-click = previous step. To move between slides: `M` (or the «فهرست اسلایدها» button, bottom left) opens a menu of all slides; `]` / `[` jump to the next / previous slide; type a slide number and press Enter to go there; click any segment of the progress bar. `R` replays the current step; `Home` / `End`; `F` fullscreen; `B` blank screen. The address bar keeps your place (`#8-12` is slide 8, step 12).
 
 ## Original 3D version
 
