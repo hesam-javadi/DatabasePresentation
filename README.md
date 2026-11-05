@@ -4,6 +4,8 @@ A Persian (RTL) talk about concurrency in multi-user databases, from the last se
 
 ## The presentation (flat design)
 
+**Live:** https://hesam-javadi.github.io/DatabasePresentation/ (GitHub Pages, served from the `gh-pages` branch; to update it, run `npm run standalone` and commit `dist/standalone/demo.html` as `index.html` on `gh-pages`).
+
 Course: درس پایگاه داده · Instructor: دکتر محمد سلطانیان · Presenters: حسام جوادی، علی‌محمد قلی‌زاده
 
 61 slides in five parts, built so that every click shows exactly one action:
