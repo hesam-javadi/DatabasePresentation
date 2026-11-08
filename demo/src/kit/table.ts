@@ -252,7 +252,7 @@ export class DbTable {
   hasLock(id: string, tone: Tone) { return this.row(id).locks.has(tone); }
 
   /** A blocked request parked at the row's edge, pulsing. */
-  wait(id: string, tone: Tone, who: string, side: 'left' | 'right', out = 16, label = 'منتظر', key: string = tone) {
+  wait(id: string, tone: Tone, who: string, side: 'left' | 'right', out = 16, label = 'Waiting', key: string = tone) {
     const r = this.row(id);
     const w = h('div', `waiter t-${tone}`, `<i class="ring"></i><span class="wb">${who}</span><em>${label}</em>`, r.el);
     w.style[side === 'right' ? 'left' : 'right'] = `calc(100% + ${out}px)`;

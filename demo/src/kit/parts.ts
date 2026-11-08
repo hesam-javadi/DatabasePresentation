@@ -76,12 +76,12 @@ export class TxnCard {
     const head = h('div', 'tx-head', `<span class="tx-badge">${o.who}</span><div class="tx-who"><b>${o.name}</b><small>${o.sub}</small></div>`, this.el);
     this.stateS = swapper(h('div', 'tx-state', '', head), '');
     if (!o.noExec) {
-      const sec = h('div', 'tx-sec', `<label>${o.execLabel ?? 'در حال اجرا'}</label>`, this.el);
-      this.execS = swapper(h('div', 'tx-exec', '', sec), `<pre>${o.exec ?? '<span class="cm">-- منتظر شروع</span>'}</pre>`);
+      const sec = h('div', 'tx-sec', `<label>${o.execLabel ?? 'Query'}</label>`, this.el);
+      this.execS = swapper(h('div', 'tx-exec', '', sec), `<pre>${o.exec ?? '<span class="cm">-- not started</span>'}</pre>`);
       (sec.lastElementChild as HTMLElement).dir = 'ltr';
     }
     if (o.mem?.length) {
-      const sec = h('div', 'tx-sec', `<label>${o.memLabel ?? 'حافظهٔ برنامه'}</label>`, this.el);
+      const sec = h('div', 'tx-sec', `<label>${o.memLabel ?? 'App Memory'}</label>`, this.el);
       const box = h('div', 'tx-mem', '', sec);
       box.dir = 'ltr';
       o.mem.forEach((m) => {
@@ -152,7 +152,7 @@ export class Lanes {
       t.style.right = `${this.labelW + (k - 1) * this.colW}px`;
       t.style.width = `${this.colW}px`;
     }
-    const axis = h('span', 'axis', `زمان ${ICON.arrowL}`, ticks);
+    const axis = h('span', 'axis', `<span dir="ltr">Time</span> ${ICON.arrowL}`, ticks);
     axis.style.left = '0';
   }
 
@@ -295,7 +295,7 @@ export function ruleCard(root: HTMLElement, o: { kicker?: string; name: string; 
 /** A prediction question for the audience; `answer(i)` reveals the right option. */
 export function ask(root: HTMLElement, q: string, opts: string[], x: number, y: number, w: number) {
   const L = ['الف', 'ب', 'ج', 'د'];
-  const el = h('div', 'ask', `<div class="ask-k">پیش‌بینی کنید</div><div class="ask-q">${q}</div>
+  const el = h('div', 'ask', `<div class="ask-t"><div class="ask-k">پیش‌بینی کنید</div><div class="ask-q">${q}</div></div>
     <div class="ask-o">${opts.map((op, i) => `<div class="op"><b>${L[i]}</b><span>${op}</span></div>`).join('')}</div>`, root);
   el.style.cssText = `left:${x}px;top:${y}px;width:${w}px`;
   const ops = Array.from(el.querySelectorAll<HTMLElement>('.op'));

@@ -21,8 +21,8 @@ export function itemsTable(root: HTMLElement, rows: Row[]) {
 
 export function worker(root: HTMLElement, tone: Tone, n: number, y: number, msg: string) {
   const c = new TxnCard(root, {
-    tone, who: `W${n}`, name: `api-${n}`, sub: `نمونهٔ ${['', '۱', '۲', '۳'][n]}`,
-    x: ITEMS.workerX, y, w: ITEMS.workerW, noExec: true, memLabel: 'پیام از صف', mem: [{ key: 'msg', init: msg }],
+    tone, who: `W${n}`, name: `api-${n}`, sub: `Instance ${['', '۱', '۲', '۳'][n]}`,
+    x: ITEMS.workerX, y, w: ITEMS.workerW, noExec: true, memLabel: 'Message', mem: [{ key: 'msg', init: msg }],
   });
   c.el.classList.add('compact');
   return c;

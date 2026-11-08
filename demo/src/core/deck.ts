@@ -111,8 +111,8 @@ export class Deck {
       if (seg) this.gotoSlide(Array.from(this.prog.children).indexOf(seg));
     });
     const ui = (e: Event) => !!(e.target as HTMLElement).closest('.nav-ui, .prog');
-    addEventListener('click', (e) => { if (e.button === 0 && !ui(e) && !this.nav.classList.contains('on')) this.next(); });
-    addEventListener('contextmenu', (e) => { e.preventDefault(); if (!this.nav.classList.contains('on')) this.prev(); });
+    // mouse clicks never advance the talk (only the keyboard or a presenter remote does)
+    void ui;
     let last = 0;
     addEventListener('wheel', (e) => {
       const now = performance.now();

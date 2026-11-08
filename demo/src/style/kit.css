@@ -277,3 +277,16 @@
 .node.tone { border-color: var(--c); background: var(--soft); }
 .node.mono { font-family: var(--mono); }
 .node.pillish { border-radius: 999px; padding: 12px 24px; }
+/* one-row prediction card */
+.ask { display: flex; align-items: center; gap: 28px; padding: 16px 26px; }
+.ask-t { flex: 1; min-width: 0; }
+.ask-q { margin: 2px 0 0; font-size: 32px; }
+.ask-o { display: flex; gap: 12px; flex: none; }
+.ask .op { padding: 8px 16px; }
+/* problem / challenge badge */
+.pbadge { display: inline-flex; align-items: center; gap: 12px; padding: 6px 18px 6px 8px; border-radius: 14px; white-space: nowrap; font-size: 25px; font-weight: 800; }
+.pbadge b { padding: 4px 14px; border-radius: 10px; color: #fff; font-weight: 850; }
+.pbadge span { font-family: var(--mono); font-weight: 750; }
+.pbadge i { font-style: normal; font-weight: 650; opacity: .75; }
+.pb-p { background: var(--bad-soft); color: #b8212b; } .pb-p b { background: var(--bad); }
+.pb-c { background: var(--ok-soft); color: #0a6e4d; } .pb-c b { background: var(--ok); }

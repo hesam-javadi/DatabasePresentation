@@ -345,11 +345,16 @@
 .qz-s { font-size: 30px; font-weight: 800; line-height: 1.45; }
 .qz-a { border-top: 2px dashed var(--line); padding-top: 12px; margin-top: 14px; }
 .qz-a b { display: block; font-size: 26px; color: var(--v); font-weight: 850; }
-.qz-a span { font-family: var(--mono); font-size: 21px; color: var(--ink3); }
-.iso-matrix.big { top: 300px; height: 440px; }
-.iso-matrix.big .mx-col { grid-template-rows: 70px repeat(4, 1fr); }
-.iso-matrix.big .mx-h b { font-size: 22px; }
-.iso-matrix.big .mx-col.legend .mx-c { font-size: 25px; }
+.qz-a span { font-family: var(--mono); font-size: 25px; color: var(--ink); font-weight: 750; }
+.iso-matrix.big { top: 330px; height: 390px; grid-template-columns: 340px repeat(5, 1fr); }
+.iso-matrix.big .mx-col { grid-template-rows: 84px repeat(3, 1fr); }
+.iso-matrix.big.skew { height: 470px; }
+.iso-matrix.big.skew .mx-col { grid-template-rows: 84px repeat(4, 1fr); }
+.iso-matrix.big .mx-h b { font-size: 24px; }
+.iso-matrix.big .mx-h small { font-size: 21px; }
+.iso-matrix.big .mx-col.legend .mx-c { font-size: 27px; }
+.iso-matrix.big .res { width: 46px; height: 46px; }
+.iso-matrix.big .res .ic { width: 28px; height: 28px; }
 .dial { position: absolute; right: 96px; top: 270px; width: 520px; display: flex; flex-direction: column-reverse; gap: 12px; }
 .dl { display: flex; justify-content: space-between; align-items: center; padding: 16px 22px; background: #fff; border: 2.5px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); }
 .dl b { font-family: var(--mono); font-size: 24px; font-weight: 800; }
@@ -451,3 +456,9 @@
 .qa-box .people div { display: grid; gap: 4px; }
 .qa-box .people small { font-size: 20px; color: var(--ink3); font-weight: 700; }
 .qa-box .people b { font-size: 30px; font-weight: 800; }
+/* problem map */
+.pmap { position: absolute; left: 96px; right: 96px; top: 270px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; direction: rtl; }
+.pm { background: #fff; border: 2.5px solid var(--line); border-radius: 22px; padding: 22px; min-height: 230px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 14px; }
+.pm-n { width: 64px; height: 64px; border-radius: 50%; background: var(--bad); color: #fff; font-size: 34px; font-weight: 850; display: flex; align-items: center; justify-content: center; }
+.pm b { display: block; font-family: var(--mono); font-size: 28px; font-weight: 800; text-align: right; }
+.pm small { display: block; font-size: 25px; color: var(--ink2); font-weight: 600; line-height: 1.4; margin-top: 6px; }

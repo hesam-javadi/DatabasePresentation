@@ -48,3 +48,12 @@ export const fa = (s: string) => `<span class="str">N'<span class="fa-in">${s}</
 export const cm = (s: string) => `<span class="cm">-- ${s}</span>`;
 export const hl = (s: string) => `<span class="hl">${s}</span>`;
 export const cur = (s: string) => `<span class="cur">${s}</span>`;
+
+/** Problem badges (Part 2). */
+const PROB = ['Lost Update', 'Dirty Read', 'Non-Repeatable Read', 'Phantom Read', 'Write Skew', 'Deadlock', 'Hot Row'];
+export const prob = (n: number, stage?: string) => ({ kind: 'مشکل' as const, n, of: PROB.length, name: PROB[n - 1], stage });
+export const P1 = (stage: string) => prob(1, stage);
+export const PROBLEMS = PROB;
+/** Challenge badges (Part 4). */
+const CHAL = ['Duplicate Message', 'Dead Worker', 'Zombie Worker', 'Poison Message', 'Hot Counter', 'Cancel', 'Retry', 'Clock Skew'];
+export const chal = (n: number) => ({ kind: 'چالش' as const, n, of: CHAL.length, name: CHAL[n - 1] });

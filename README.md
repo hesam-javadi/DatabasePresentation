@@ -8,15 +8,15 @@ A Persian (RTL) talk about concurrency in multi-user databases, from the last se
 
 Course: درس پایگاه داده · Instructor: دکتر محمد سلطانیان · Presenters: حسام جوادی، علی‌محمد قلی‌زاده
 
-61 slides in five parts, built so that every click shows exactly one action:
+57 slides in five parts (about 295 clicks):
 
-1. **Basics**: transaction, interleaving, S/X locks, the visual language.
-2. **Problems**: lost update, dirty read, non-repeatable read, phantom, write skew, deadlock, hot row. Each one goes from a flat-shaded 3D story from student life (course registration, grade entry, exam proctors, add/drop week, the 8 AM rush) to the same moment on a real table, then to a rule card.
-3. **Tools**: one slide per isolation level on the same scenario, the version store, SNAPSHOT conflicts, `UPDLOCK`, `rowversion`, and when to use which.
-4. **A real system**: why a background bulk-operation engine was needed, how it works (data model, item lifecycle, flow, bulk insert, dispatch window, at-least-once delivery), then its concurrency issues one by one (claim, lease, fencing token, sweeper, derived counters, cancel, retries, one clock, load-test proof).
-5. **Risks in similar systems** and five rules.
+1. **Basics**: Transaction, interleaving, Shared Lock and Exclusive Lock.
+2. **Problems**, numbered «مشکل ۱ از ۷» to «مشکل ۷ از ۷»: Lost Update, Dirty Read, Non-Repeatable Read, Phantom Read, Write Skew, Deadlock, Hot Row. Each one goes from a flat-shaded 3D story from student life (course registration, grade entry, exam proctors, two library books, the 8 AM rush) to the same moment on a real table, then to its fix. A badge on every slide shows which problem and which stage the audience is in.
+3. **Tools**: one slide per Isolation Level on the same scenario (the solution to problems 2–4), SNAPSHOT conflicts, `UPDLOCK`, `rowversion`, and when to use which.
+4. **A real system**: why a background bulk-operation engine was needed, how it works (data model, item lifecycle, flow, bulk insert, dispatch window, at-least-once delivery), then its eight concurrency challenges, numbered «چالش ۱ از ۸» to «چالش ۸ از ۸» (Duplicate Message, Dead Worker, Zombie Worker, Poison Message, Hot Counter, Cancel, Retry, Clock Skew).
+5. **Risks in similar systems** (Idempotency, Outbox, Lock Escalation) and five rules.
 
-Every slide opens with its title alone; objects are added one per click. Animations play slowly; pressing the key during one lets it finish and queues the next, so nothing is skipped.
+No slide opens empty: the first click shows the title with the first content. Technical keywords are in English inside the Persian text. Animations play slowly; pressing the key during one lets it finish and queues the next, so nothing is skipped.
 
 - Design and teaching approach, slide by slide: [docs/DESIGN_PLAN.md](docs/DESIGN_PLAN.md)
 - Source: [demo/](demo/)
@@ -37,7 +37,7 @@ npm run standalone
 
 The file is written to `dist/standalone/demo.html`.
 
-Controls: Space / PageDown / ← / click = next step; PageUp / → / right-click = previous step. To move between slides: `M` (or the «فهرست اسلایدها» button, bottom left) opens a menu of all slides; `]` / `[` jump to the next / previous slide; type a slide number and press Enter to go there; click any segment of the progress bar. `R` replays the current step; `Home` / `End`; `F` fullscreen; `B` blank screen. The address bar keeps your place (`#8-12` is slide 8, step 12).
+Controls: Space / PageDown / ← = next step; PageUp / → = previous step. Mouse clicks don't move the talk. To move between slides: `M` (or the «فهرست اسلایدها» button, bottom left) opens a menu of all slides; `]` / `[` jump to the next / previous slide; type a slide number and press Enter to go there; click any segment of the progress bar. `R` replays the current step; `Home` / `End`; `F` fullscreen; `B` blank screen. The address bar keeps your place (`#8-12` is slide 8, step 12).
 
 ## Original 3D version
 
