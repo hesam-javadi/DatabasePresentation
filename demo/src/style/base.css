@@ -154,3 +154,14 @@ body.idle .nav-btn { opacity: 0; }
 .nav-ch a b { min-width: 46px; color: var(--ink3); font-weight: 800; }
 .nav-ch a:hover { background: #fff; box-shadow: var(--shadow); }
 .nav-ch a.cur { background: var(--t1); color: #fff; } .nav-ch a.cur b { color: #fff; }
+
+/* touch screens: on-screen next/previous (never shown with a mouse) */
+.touch-nav { display: none; }
+@media (pointer: coarse) {
+  .touch-nav { display: flex; position: fixed; right: 12px; bottom: 12px; gap: 10px; z-index: 60; direction: ltr; }
+  .touch-nav button {
+    width: 52px; height: 52px; border-radius: 50%; border: 0; background: rgba(20, 27, 45, .72); color: #fff;
+    font-size: 34px; line-height: 1; display: grid; place-items: center; padding: 0 0 4px; touch-action: manipulation;
+  }
+  .touch-nav .tn-next { background: rgba(40, 86, 230, .85); }
+}

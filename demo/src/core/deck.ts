@@ -112,7 +112,6 @@ export class Deck {
     });
     const ui = (e: Event) => !!(e.target as HTMLElement).closest('.nav-ui, .prog');
     // mouse clicks never advance the talk (only the keyboard or a presenter remote does)
-    void ui;
     let last = 0;
     addEventListener('wheel', (e) => {
       const now = performance.now();
@@ -120,6 +119,17 @@ export class Deck {
       last = now;
       e.deltaY > 0 ? this.next() : this.prev();
     }, { passive: true });
+    // touch screens only: swipe, and two on-screen buttons that CSS shows only for coarse pointers
+    let tx = 0, ty = 0, tt = 0;
+    addEventListener('touchstart', (e) => { const t = e.touches[0]; tx = t.clientX; ty = t.clientY; tt = performance.now(); }, { passive: true });
+    addEventListener('touchend', (e) => {
+      if (ui(e) || this.nav.classList.contains('on')) return;
+      const t = e.changedTouches[0], dx = t.clientX - tx, dy = t.clientY - ty;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && performance.now() - tt < 900) dx > 0 ? this.next() : this.prev();
+    }, { passive: true });
+    const tn = h('div', 'nav-ui touch-nav', '<button class="tn-prev" aria-label="قبلی">›</button><button class="tn-next" aria-label="بعدی">‹</button>', document.body);
+    tn.querySelector('.tn-next')!.addEventListener('click', () => this.next());
+    tn.querySelector('.tn-prev')!.addEventListener('click', () => this.prev());
     let idle = 0;
     addEventListener('mousemove', () => {
       document.body.classList.remove('idle');

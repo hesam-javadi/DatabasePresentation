@@ -37,7 +37,7 @@ npm run standalone
 
 The file is written to `dist/standalone/demo.html`.
 
-Controls: Space / PageDown / ← = next step; PageUp / → = previous step. Mouse clicks don't move the talk. To move between slides: `M` (or the «فهرست اسلایدها» button, bottom left) opens a menu of all slides; `]` / `[` jump to the next / previous slide; type a slide number and press Enter to go there; click any segment of the progress bar. `R` replays the current step; `Home` / `End`; `F` fullscreen; `B` blank screen. The address bar keeps your place (`#8-12` is slide 8, step 12).
+Controls: Space / PageDown / ← = next step; PageUp / → = previous step. Mouse clicks don't move the talk. On a phone or tablet, swipe (finger to the right = next) or use the two round buttons at the bottom right; landscape works best. To move between slides: `M` (or the «فهرست اسلایدها» button, bottom left) opens a menu of all slides; `]` / `[` jump to the next / previous slide; type a slide number and press Enter to go there; click any segment of the progress bar. `R` replays the current step; `Home` / `End`; `F` fullscreen; `B` blank screen. The address bar keeps your place (`#8-12` is slide 8, step 12).
 
 ## Original 3D version
 

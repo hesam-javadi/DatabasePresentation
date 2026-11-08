@@ -25,22 +25,52 @@ const mesh = (g: THREE.BufferGeometry, m: THREE.Material, x = 0, y = 0, z = 0) =
 
 interface Label { el: HTMLElement; obj: THREE.Object3D; off: THREE.Vector3 }
 
+/**
+ * One WebGL renderer shared by every 3D story, created on first use and lent to whichever
+ * story slide is on screen. Phones cap total canvas memory, so five renderers at full
+ * density crashed the tab there.
+ */
+let shared: { r: THREE.WebGLRenderer; c: HTMLCanvasElement } | null | undefined;
+let owner: Stage3D | null = null;
+const touchDevice = () => matchMedia('(pointer: coarse)').matches || Math.min(screen.width, screen.height) < 820;
+/** Desktop keeps its original density; phones and tablets render at the size they actually display. */
+function pixelRatio() {
+  const dpr = devicePixelRatio || 1;
+  if (!touchDevice()) return Math.min(2, dpr) * 1.25;
+  const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+  return Math.min(1.5, Math.max(0.6, k * dpr * 1.15));
+}
+function getShared() {
+  if (shared !== undefined) return shared;
+  try {
+    const c = document.createElement('canvas');
+    c.className = 'gl';
+    const r = new THREE.WebGLRenderer({ canvas: c, antialias: true, alpha: true, preserveDrawingBuffer: true });
+    r.outputColorSpace = THREE.SRGBColorSpace;
+    c.addEventListener('webglcontextlost', (e) => e.preventDefault());
+    c.addEventListener('webglcontextrestored', () => owner?.renderOnce());
+    shared = { r, c };
+  } catch {
+    shared = null;
+  }
+  return shared;
+}
+
 export class Stage3D {
-  canvas: HTMLCanvasElement;
-  renderer: THREE.WebGLRenderer;
+  box: HTMLElement;
   scene = new THREE.Scene();
   camera: THREE.PerspectiveCamera;
+  private poster: HTMLCanvasElement;
   private labels: Label[] = [];
   private on = false;
+  private release = 0;
   private v = new THREE.Vector3();
 
   constructor(private root: HTMLElement, public o: { x: number; y: number; w: number; h: number; cam: [number, number, number]; look: [number, number, number]; fov?: number }) {
-    this.canvas = h('canvas', 'stage3d', '', root) as HTMLCanvasElement;
-    this.canvas.style.cssText = `left:${o.x}px;top:${o.y}px;width:${o.w}px;height:${o.h}px`;
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
-    this.renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1) * 1.25);
-    this.renderer.setSize(o.w, o.h, false);
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.box = h('div', 'stage3d', '', root);
+    this.box.style.cssText = `left:${o.x}px;top:${o.y}px;width:${o.w}px;height:${o.h}px`;
+    this.poster = h('canvas', 'gl poster', '', this.box) as HTMLCanvasElement;
+    this.poster.width = this.poster.height = 0;
     this.camera = new THREE.PerspectiveCamera(o.fov ?? 30, o.w / o.h, 0.1, 200);
     this.camera.position.set(...o.cam);
     this.camera.lookAt(new THREE.Vector3(...o.look));
@@ -48,6 +78,7 @@ export class Stage3D {
     const sun = new THREE.DirectionalLight(0xffffff, 2.0);
     sun.position.set(-6, 12, 8);
     this.scene.add(sun);
+    addEventListener('resize', () => { if (owner === this) this.size(); });
   }
 
   add(...o: THREE.Object3D[]) { this.scene.add(...o); return this; }
@@ -69,21 +100,47 @@ export class Stage3D {
     }
   }
 
+  private size() {
+    if (!shared) return;
+    shared.r.setPixelRatio(pixelRatio());
+    shared.r.setSize(this.o.w, this.o.h, false);
+  }
+
   private loop = () => {
-    if (!this.on) return;
+    if (!this.on || owner !== this || !shared) return;
     this.place();
-    this.renderer.render(this.scene, this.camera);
+    shared.r.render(this.scene, this.camera);
     requestAnimationFrame(this.loop);
   };
 
-  /** Render only while the slide is current. */
+  /** Render only while the slide is current; the shared canvas moves into this slide. */
   active(on: boolean) {
     if (on === this.on) return;
     this.on = on;
-    if (on) requestAnimationFrame(this.loop);
+    clearTimeout(this.release);
+    if (on) {
+      const sh = getShared();
+      if (!sh) return;
+      if (owner && owner !== this) owner.on = false;
+      owner = this;
+      if (sh.c.parentElement !== this.box) this.box.appendChild(sh.c);
+      this.size();
+      this.poster.style.display = 'none';
+      this.poster.width = this.poster.height = 0;
+      requestAnimationFrame(this.loop);
+    } else if (owner === this && shared) {
+      // keep the last frame visible while the slide fades out, then free it
+      const c = shared.c;
+      this.poster.width = c.width;
+      this.poster.height = c.height;
+      this.poster.getContext('2d')?.drawImage(c, 0, 0);
+      this.poster.style.display = '';
+      owner = null;
+      this.release = window.setTimeout(() => { if (!this.on) this.poster.width = this.poster.height = 0; }, 1500);
+    }
   }
 
-  renderOnce() { this.place(); this.renderer.render(this.scene, this.camera); }
+  renderOnce() { if (owner === this && shared) { this.place(); shared.r.render(this.scene, this.camera); } }
 }
 
 // ---------------------------------------------------------------- props
